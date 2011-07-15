@@ -37,8 +37,9 @@ from_list(List,Options) when is_list(Options)->
 	Symmetric =get_symmetry(proplists:get_value(symmetric, Options,false)),
 	Strict =false,
 	
+	CleanedList = sets:to_list(sets:from_list(List)),
 	MatrixT = #sparse_matrix{ dims=Dims, default=Default, strict=Strict,
-														values=List, symmetric=Symmetric},							 	
+														values=CleanedList, symmetric=Symmetric},							 	
 	Matrix = enforce_upper(MatrixT),
   Matrix;
 
@@ -50,7 +51,8 @@ from_list(List, Default) ->
 
 %% @deprecated
 from_list(List, Default, {MaxR,MaxC}) when is_integer(MaxR), is_integer(MaxC) ->
-  #sparse_matrix{dims={MaxR,MaxC}, default=Default, values=List}.
+	CleanedList = sets:to_list(sets:from_list(List)),
+  #sparse_matrix{dims={MaxR,MaxC}, default=Default, values=CleanedList}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ACCESSORS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
