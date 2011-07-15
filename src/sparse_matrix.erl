@@ -35,13 +35,13 @@ from_list(List,Options) when is_list(Options)->
 	Dims = get_dimension(proplists:get_value(dims, Options),List),
 	Default = proplists:get_value(default, Options,0),	
 	Symmetric =get_symmetry(proplists:get_value(symmetric, Options,false)),
-	Strict =false,
+	Strict =false,	
 	
-	CleanedList = sets:to_list(sets:from_list(List)),
 	MatrixT = #sparse_matrix{ dims=Dims, default=Default, strict=Strict,
-														values=CleanedList, symmetric=Symmetric},							 	
+														values=List, symmetric=Symmetric},							 	
 	Matrix = enforce_upper(MatrixT),
-  Matrix;
+	CleanedList = sets:to_list(sets:from_list(Matrix#sparse_matrix.values)),
+  Matrix#sparse_matrix{values=CleanedList};
 
 %% @deprecated
 from_list(List, Default) ->
