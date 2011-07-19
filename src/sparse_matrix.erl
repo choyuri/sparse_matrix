@@ -176,4 +176,4 @@ max_cols(List, {{_,C0},_}) when is_integer(C0) ->
   hd(lists:reverse(lists:sort([C || {{_,C},_} <- List])));
 max_cols(List, _) ->
   length(lists:usort([C || {{_,C},_} <- List])).
-  
+ 
